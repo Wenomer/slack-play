@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends \Symfony\Bundle\FrameworkBundle\Controller\Controller implements ContainerAwareInterface
 {
-    public function jsonResponse(array $data)
+    public function jsonResponse($data)
     {
         return $this->response(json_encode($data), 200 , ['Content-type' => 'application/json']);
     }

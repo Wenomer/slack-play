@@ -8,4 +8,9 @@ class Button extends Action
         $this->type = self::TYPE_BUTTON;
     }
 
+    public static function create(): Button
+    {
+        return new self();
+    }
+
 }

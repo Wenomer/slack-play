@@ -2,10 +2,11 @@
 
 namespace App\SlackMessage;
 
-class Message
+class Message implements \JsonSerializable
 {
-    private $text;
+    use JsonSerializeTrait;
 
+    private $text;
     private $attachments = [];
 
     public function __construct($text)
@@ -13,15 +14,39 @@ class Message
         $this->text = $text;
     }
 
-    public static function create($text)
+    /**
+     * @param $text
+     * @return Message
+     */
+    public static function create($text) : Message
     {
         return new self($text);
     }
 
-    public function addAttachment(Attachment $attachment)
+    /**
+     * @param Attachment $attachment
+     * @return Message
+     */
+    public function withAttachment(Attachment $attachment) : Message
     {
         $this->attachments[] = $attachment;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'text' => $this->text,
+            'attachments' => $this->attachments,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() : string
+    {
+        return json_encode($this);
     }
 }

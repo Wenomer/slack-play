@@ -2,13 +2,14 @@
 
 namespace App\SlackMessage;
 
-class Attachment
+class Attachment implements \JsonSerializable
 {
+    use JsonSerializeTrait;
+
     private $title;
     private $fallback;
     private $callbackId;
     private $color;
-    
     private $actions;
 
     public function __construct($title)
@@ -16,14 +17,33 @@ class Attachment
         $this->title = $title;
     }
 
-    public static function create($title)
+    /**
+     * @param $title
+     * @return Attachment
+     */
+    public static function create($title): Attachment
     {
         return new self($title);
     }
 
-    public function addAction(Action $action)
+    /**
+     * @param Action $action
+     * @return Attachment
+     */
+    public function withAction(Action $action): Attachment
     {
         $this->actions[] = $action;
+
+        return $this;
+    }
+
+    /**
+     * @param $callbackId
+     * @return Attachment
+     */
+    public function withCallbackId($callbackId): Attachment
+    {
+        $this->callbackId = $callbackId;
 
         return $this;
     }
