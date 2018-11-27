@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -39,5 +40,20 @@ class Game
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="GamePlayer", mappedBy="game")
+     */
+    private $players;
+
+    /**
+     * @return Collection|GamePlayer[]
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
     }
 }

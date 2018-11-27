@@ -13,6 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
 class GamePlayer
 {
     /**
+     * GamePlayer constructor.
+     * @param Game $game
+     * @param string $player
+     */
+    public function __construct(Game $game, string $player)
+    {
+        $this->game = $game;
+        $this->player = $player;
+    }
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false, options={"unsigned"=true})
@@ -24,16 +35,9 @@ class GamePlayer
     /**
      * @var string
      *
-     * @ORM\Column(name="player", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    private $player;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="position", type="smallint", nullable=false)
-     */
-    private $position;
+    private $name;
 
     /**
      * @var Game
@@ -45,5 +49,11 @@ class GamePlayer
      */
     private $game;
 
-
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

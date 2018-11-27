@@ -21,10 +21,9 @@ final class Version20181127092704 extends AbstractMigration
              CREATE TABLE `game_player` (
               `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
               `game_id` int(10) unsigned NOT NULL,
-              `player` varchar(255) NOT NULL,
-              `position` smallint(1) NOT NULL,
+              `name` varchar(255) NOT NULL
               PRIMARY KEY (`id`),
-              UNIQUE KEY `game_player_position` (`game_id`,`position`) USING BTREE,
+              UNIQUE KEY `game_player_name` (`game_id`,`name`) USING BTREE,
               CONSTRAINT `game_player` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ');
