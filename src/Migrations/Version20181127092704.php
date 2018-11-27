@@ -10,7 +10,7 @@ final class Version20181127092704 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         $this->addSql('
-             CREATE TABLE `match` (
+             CREATE TABLE `game` (
               `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
               `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
               PRIMARY KEY (`id`)
@@ -18,22 +18,21 @@ final class Version20181127092704 extends AbstractMigration
         ');
 
         $this->addSql('
-             CREATE TABLE `match_player` (
+             CREATE TABLE `game_player` (
               `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-              `match_id` int(10) unsigned NOT NULL,
+              `game_id` int(10) unsigned NOT NULL,
               `player` varchar(255) NOT NULL,
               `position` smallint(1) NOT NULL,
               PRIMARY KEY (`id`),
-              UNIQUE KEY `match_player_position` (`match_id`,`position`) USING BTREE,
-              CONSTRAINT `match_player` FOREIGN KEY (`match_id`) REFERENCES `match` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+              UNIQUE KEY `game_player_position` (`game_id`,`position`) USING BTREE,
+              CONSTRAINT `game_player` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ');
     }
 
     public function down(Schema $schema) : void
     {
-        $this->addSql('DROP TABLE ');
-        $this->addSql('ALTER TABLE match_player CHANGE match_id match_id INT UNSIGNED NOT NULL');
-        $this->addSql('ALTER TABLE match_player ADD CONSTRAINT match_player FOREIGN KEY (match_id) REFERENCES `match` (id) ON UPDATE CASCADE ON DELETE CASCADE');
+        $this->addSql('DROP TABLE game');
+        $this->addSql('DROP TABLE game_player');
     }
 }

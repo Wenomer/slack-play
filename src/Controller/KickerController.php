@@ -1,8 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Match;
-use App\SlackMessage\Action;
+use App\Entity\Game;
 use App\SlackMessage\Attachment;
 use App\SlackMessage\Button;
 use App\SlackMessage\Message;
@@ -20,7 +19,7 @@ class KickerController extends Controller
      */
     public function CommandAction(Request $request, Connection $connection)
     {
-        $match = new Match();
+        $match = new Game();
         $this->getDoctrine()->getManager()->persist($match);
         $this->getDoctrine()->getManager()->flush();
 
@@ -37,7 +36,7 @@ class KickerController extends Controller
         return $this->response((string) $request->getContent());
     }
 
-    public function getMessage(Match $match)
+    public function getMessage(Game $match)
     {
         $message = Message::create('')
             ->withAttachment(

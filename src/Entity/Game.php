@@ -5,13 +5,18 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Match
+ * Game
  *
- * @ORM\Table(name="match")
+ * @ORM\Table(name="game")
  * @ORM\Entity
  */
-class Match
+class Game
 {
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime('now');
+    }
+
     /**
      * @var int
      *

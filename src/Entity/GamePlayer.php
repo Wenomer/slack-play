@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MatchPlayer
+ * GamePlayer
  *
- * @ORM\Table(name="match_player", uniqueConstraints={@ORM\UniqueConstraint(name="match_player_position", columns={"match_id", "position"})}, indexes={@ORM\Index(name="IDX_397683642ABEACD6", columns={"match_id"})})
+ * @ORM\Table(name="game_player", uniqueConstraints={@ORM\UniqueConstraint(name="game_player_position", columns={"match_id", "position"})}, indexes={@ORM\Index(name="IDX_397683642ABEACD6", columns={"match_id"})})
  * @ORM\Entity
  */
-class MatchPlayer
+class GamePlayer
 {
     /**
      * @var int
@@ -36,14 +36,14 @@ class MatchPlayer
     private $position;
 
     /**
-     * @var Match
+     * @var Game
      *
-     * @ORM\ManyToOne(targetEntity="Match")
+     * @ORM\ManyToOne(targetEntity="Game")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="match_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      * })
      */
-    private $match;
+    private $game;
 
 
 }
