@@ -23,8 +23,6 @@ class KickerController extends Controller
         $this->getDoctrine()->getManager()->persist($match);
         $this->getDoctrine()->getManager()->flush();
 
-
-
         return $this->jsonResponse($this->getMessage($match));
     }
 
@@ -33,35 +31,16 @@ class KickerController extends Controller
      */
     public function InteractionAction(Request $request)
     {
-        return $this->response((string) $request->getContent());
+        error_log(print_r($request->get('payload'), true));
+
+        return $this->response((string) 'pew');
     }
 
     public function getMessage(Game $match)
     {
         $message = Message::create('')
             ->withAttachment(
-                Attachment::create('       
-       :-------|-----|-------:
-       |                     |
-####-- + ---------X--------- +
-       |                     |
-####-- + ------X-----X------ +
-       |                     |
-       + ----X----X----X---- + --####
-       |                     |
-####-- + -X----X-----X----X- + 
-       |                     |
-       + -X----X-----X----X- + --####
-       |                     |
-####-- + ----X----X----X---- +
-       |                     |
-       + ------X-----X------ + --####
-       |                     |
-       + ---------X--------- + --####
-       |                     |
-       :-------|-----|-------:
-       ')
-
+                Attachment::create('Let\'s play!')
                     ->withCallbackId($match->getId())
                     ->withAction(
                         Button::create()
