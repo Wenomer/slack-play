@@ -16,15 +16,16 @@ abstract class Action implements \JsonSerializable
     protected $name;
     protected $text;
     protected $value;
+    protected $style;
     protected $type;
 
     abstract public static function create();
 
     /**
-     * @param $name
+     * @param string $name
      * @return Action
      */
-    public function withName($name): Action
+    public function withName(string $name): Action
     {
         $this->name = $name;
 
@@ -32,10 +33,10 @@ abstract class Action implements \JsonSerializable
     }
 
     /**
-     * @param $text
+     * @param string $text
      * @return Action
      */
-    public function withText($text): Action
+    public function withText(string $text): Action
     {
         $this->text = $text;
 
@@ -43,12 +44,42 @@ abstract class Action implements \JsonSerializable
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return Action
      */
-    public function withValue($value): Action
+    public function withValue(string $value): Action
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return Action
+     */
+    public function withDefaultStyle(): Action
+    {
+        $this->style = self::STYLE_DEFAULT;
+
+        return $this;
+    }
+
+    /**
+     * @return Action
+     */
+    public function withPrimaryStyle(): Action
+    {
+        $this->style = self::STYLE_PRIMARY;
+
+        return $this;
+    }
+
+    /**
+     * @return Action
+     */
+    public function withDangerStyle(): Action
+    {
+        $this->style = self::STYLE_DANGER;
 
         return $this;
     }

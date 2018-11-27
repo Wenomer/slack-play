@@ -12,16 +12,20 @@ class Attachment implements \JsonSerializable
     private $color;
     private $actions;
 
-    public function __construct($title)
+    /**
+     * Attachment constructor.
+     * @param string $title
+     */
+    public function __construct(string $title)
     {
         $this->title = $title;
     }
 
     /**
-     * @param $title
+     * @param string $title
      * @return Attachment
      */
-    public static function create($title): Attachment
+    public static function create(string $title): Attachment
     {
         return new self($title);
     }
@@ -38,10 +42,10 @@ class Attachment implements \JsonSerializable
     }
 
     /**
-     * @param $callbackId
+     * @param int $callbackId
      * @return Attachment
      */
-    public function withCallbackId($callbackId): Attachment
+    public function withCallbackId(int $callbackId): Attachment
     {
         $this->callbackId = $callbackId;
 

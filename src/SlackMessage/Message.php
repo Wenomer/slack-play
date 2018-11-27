@@ -9,16 +9,20 @@ class Message implements \JsonSerializable
     private $text;
     private $attachments = [];
 
-    public function __construct($text)
+    /**
+     * Message constructor.
+     * @param string $text
+     */
+    public function __construct(string $text)
     {
         $this->text = $text;
     }
 
     /**
-     * @param $text
+     * @param string $text
      * @return Message
      */
-    public static function create($text) : Message
+    public static function create(string $text) : Message
     {
         return new self($text);
     }
@@ -32,14 +36,6 @@ class Message implements \JsonSerializable
         $this->attachments[] = $attachment;
 
         return $this;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'text' => $this->text,
-            'attachments' => $this->attachments,
-        ];
     }
 
     /**

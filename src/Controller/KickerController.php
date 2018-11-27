@@ -1,9 +1,12 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Match;
+use App\SlackMessage\Action;
 use App\SlackMessage\Attachment;
 use App\SlackMessage\Button;
 use App\SlackMessage\Message;
+use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,20 +18,15 @@ class KickerController extends Controller
     /**
      * @Route("/command")
      */
-    public function CommandAction(Request $request)
+    public function CommandAction(Request $request, Connection $connection)
     {
-        $message = Message::create('The kicker match')
-            ->withAttachment(
-                Attachment::create('Lets play')
-                    ->withCallbackId(1)
-                    ->withAction(
-                        Button::create()
-                            ->withName("imIn")
-                            ->withText("I'm in!")
-                    )
-            );
+        $match = new Match();
+        $this->getDoctrine()->getManager()->persist($match);
+        $this->getDoctrine()->getManager()->flush();
 
-        return $this->jsonResponse($message);
+
+
+        return $this->jsonResponse($this->getMessage($match));
     }
 
     /**
@@ -37,5 +35,43 @@ class KickerController extends Controller
     public function InteractionAction(Request $request)
     {
         return $this->response((string) $request->getContent());
+    }
+
+    public function getMessage(Match $match)
+    {
+        $message = Message::create('')
+            ->withAttachment(
+                Attachment::create('       
+       :-------|-----|-------:
+       |                     |
+####-- + ---------X--------- +
+       |                     |
+####-- + ------X-----X------ +
+       |                     |
+       + ----X----X----X---- + --####
+       |                     |
+####-- + -X----X-----X----X- + 
+       |                     |
+       + -X----X-----X----X- + --####
+       |                     |
+####-- + ----X----X----X---- +
+       |                     |
+       + ------X-----X------ + --####
+       |                     |
+       + ---------X--------- + --####
+       |                     |
+       :-------|-----|-------:
+       ')
+
+                    ->withCallbackId($match->getId())
+                    ->withAction(
+                        Button::create()
+                            ->withName("imIn")
+                            ->withText("I'm in!")
+                            ->withPrimaryStyle()
+                    )
+            );
+
+        return $message;
     }
 }
