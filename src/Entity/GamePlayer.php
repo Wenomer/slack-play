@@ -20,7 +20,7 @@ class GamePlayer
     public function __construct(Game $game, string $player)
     {
         $this->game = $game;
-        $this->player = $player;
+        $this->name = $player;
     }
 
     /**
