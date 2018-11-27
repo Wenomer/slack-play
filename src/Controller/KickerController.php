@@ -48,7 +48,7 @@ die;
     public function InteractionAction(Request $request)
     {
         $payload = $request->get('payload');
-        $payload = json_decode($payload);
+        $payload = json_decode($payload, true);
         error_log(print_r($payload, true));
         error_log($payload['callback_id']);
 
