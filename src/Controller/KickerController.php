@@ -48,13 +48,16 @@ die;
     public function InteractionAction(Request $request)
     {
         $payload = $request->get('payload');
-        error_log(gettype($payload));
+        $payload = json_decode($payload);
+        error_log(print_r($payload, true));
+        error_log($payload['callback_id']);
+
         /** @var Game $game */
-//        $game = $this->getDoctrine()->getManager()->getRepository(Game::class)->find($payload['callback_id']);
-//        $gamePlayer = new GamePlayer($game, $payload['user']['name']);
+        $game = $this->getDoctrine()->getManager()->getRepository(Game::class)->find($payload['callback_id']);
+        $gamePlayer = new GamePlayer($game, $payload['user']['name']);
 //
-//        $this->getDoctrine()->getManager()->persist($gamePlayer);
-//        $this->getDoctrine()->getManager()->flush();
+        $this->getDoctrine()->getManager()->persist($gamePlayer);
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->jsonResponse($this->getMessage($game));
     }
