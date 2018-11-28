@@ -57,6 +57,7 @@ die;
             $gamePlayer = new GamePlayer($game, $payload['user']['name']);
             $this->getDoctrine()->getManager()->persist($gamePlayer);
             $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->refresh($game);
         }
 
         return $this->jsonResponse($this->getMessage($game));
