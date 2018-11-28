@@ -58,4 +58,15 @@ class Game
     {
         return $this->players;
     }
+
+    public function alreadyIn($name)
+    {
+        foreach ($this->getPlayers() as $player) {
+            if ($player->getName() === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
