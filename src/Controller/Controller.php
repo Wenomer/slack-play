@@ -19,14 +19,12 @@ class Controller extends \Symfony\Bundle\FrameworkBundle\Controller\Controller i
 
     public function getJson(Request $request, $key)
     {
-        $content = $request->getContent();
+        $data = $request->get($key, null);
 
-        if (empty($content)) {
+        if (!$data) {
             return null;
         }
 
-        $data  = json_decode($content, true);
-
-        return $data[$key] ?? null;
+        return json_decode($data, true);
     }
 }

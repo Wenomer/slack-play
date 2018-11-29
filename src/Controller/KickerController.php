@@ -7,6 +7,8 @@ use App\SlackMessage\Attachment;
 use App\SlackMessage\Button;
 use App\SlackMessage\Message;
 use Doctrine\DBAL\Connection;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,12 +22,8 @@ class KickerController extends Controller
      */
     public function DebugAction(Request $request, Connection $connection)
     {
-        /** @var Game $game */
-        $game = $this->getDoctrine()->getManager()->getRepository(Game::class)->find(11);
+        var_dump($this->container->getParameter('webhook_url'));
 
-foreach ($game->getPlayers() as $player) {
-    var_dump($player->getPlayer());
-}
 die;
 //        return $this->jsonResponse($this->getMessage($game));
     }
@@ -47,7 +45,7 @@ die;
      */
     public function InteractionAction(Request $request)
     {
-        $payload = json_decode($request->get('payload'), true);
+        $payload = $this->getJson($request, 'payload');
         $player = $payload['user']['name'];
 
         /** @var Game $game */
@@ -100,6 +98,30 @@ die;
             ->withAttachment($attachment)
         ;
 
+        if ($gameIsFull) {
+            $this->sendInvitation($game);
+        }
+
         return $message;
+    }
+
+    public function sendInvitation(Game $game)
+    {
+        $url = $this->container->getParameter('webhook_url');
+
+        $text = 'Go go go: ';
+        $players = [];
+
+        foreach ($game->getPlayers() as $player) {
+            $players[] = '<@' . $player->getName() . '>';
+        }
+
+        $text .= implode(', ', $players);
+
+        $client = new Client();
+
+        $client->post($url, [
+            RequestOptions::JSON => ['text' => $text]
+        ]);
     }
 }

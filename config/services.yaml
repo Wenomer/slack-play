@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    webhook_url: 'https://hooks.slack.com/services/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'
 
 services:
     # default configuration for services in *this* file
